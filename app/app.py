@@ -2,11 +2,10 @@ from flask import Flask, jsonify
 import pika
 import threading
 import json
-import spacy
 from collections import defaultdict
+from models import DefaultModel
 
 app = Flask(__name__)
-nlp = spacy.load("en_core_web_sm")
 
 inference_results = defaultdict(dict)
 
@@ -24,8 +23,8 @@ def process_message(channel, method, properties, body):
     input_text = message['input_text']
     
     # Perform NER prediction
-    doc = nlp(input_text)
-    prediction = [(entity.text, entity.label_) for entity in doc.ents]
+    ner = DefaultModel()
+    prediction = ner.infer(input_text)
     
     # Store the result in the in-memory data structure
     inference_results[message_id] = {'input_text': input_text, 'prediction': prediction}
