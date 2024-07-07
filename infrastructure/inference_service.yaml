@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inference-service
+  namespace: ml-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inference-service
+  template:
+    metadata:
+      labels:
+        app: inference-service
+    spec:
+      containers:
+      - name: inference-service
+        image: inference-service:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: RABBITMQ_HOST
+          value: "rabbitmq"
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: RABBITMQ_USER
+          value: "guest"
+        - name: RABBITMQ_PASSWORD
+          value: "guest"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inference-service
+  namespace: ml-inference
+spec:
+  selector:
+    app: inference-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
