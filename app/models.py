@@ -18,11 +18,11 @@ class Model(ABC):
 class DefaultModel(Model):
     
     def __init__(self):
-        import spacy
         self.nlp = None
         self.setup()
     
     def setup(self):
+        import spacy
         self.nlp = spacy.load("en_core_web_sm")
 
     def infer(self, input_text: str):
