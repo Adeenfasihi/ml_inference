@@ -1,11 +1,10 @@
 # 1 - Service Setup
 
 ```
-python3 -m venv ml
-source ml/bin/activate
-pip install --upgrade pip
-pip install flask
-python service.py
+cd service
+docker build -t flask-app .
+docker run -p 5000:5000 flask-app
+
 ```
 
 *Test endpoints*:
