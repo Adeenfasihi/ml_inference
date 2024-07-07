@@ -14,7 +14,7 @@ channel = connection.channel()
 
 message = {
     "id": str(uuid.uuid4()),
-    "input_text": "If you ever want to go to London, make sure to visit the British Museum to immerse yourself in centuries of art and history,"
+    "input_text": "If you ever want to go to London, make sure to visit the British Museum to immerse yourself in centuries of art and history."
 }
 
 print(message)
